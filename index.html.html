@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>농담 — 농심인의 이야기 : 영업직</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --cream:#FFF4E0;
+    --ink:#1A1A1A;
+    --red:#E4002B;
+    --red-deep:#B5001F;
+    --gray:#8C8579;
+    --line:#E8E2D8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Noto Sans KR', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--red); color:#fff;}
+  .hand{ font-family:'Gaegu', cursive; }
+
+  /* ===== NAV ===== */
+  .topbar{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 6vw;
+    background:rgba(255,255,255,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .mark{ font-weight:900; font-size:18px; letter-spacing:-0.02em; }
+  .topbar .mark span{color:var(--red);}
+  .topbar nav{display:flex; gap:28px; font-size:13px; font-weight:600; color:var(--gray);}
+  .topbar nav a{ color:var(--gray); text-decoration:none; }
+  @media(max-width:720px){ .topbar nav{display:none;} }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:120px 6vw 80px;
+    overflow:hidden;
+  }
+  .hero-eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-size:13px; font-weight:700; color:var(--red);
+    letter-spacing:0.08em; margin-bottom:28px;
+    opacity:0; animation:rise .7s .1s forwards;
+  }
+  .hero-eyebrow::before{ content:''; width:28px; height:2px; background:var(--red); }
+  .hero h1{
+    font-size:clamp(72px, 16vw, 200px);
+    font-weight:900; line-height:0.86; letter-spacing:-0.04em;
+    color:var(--ink);
+    opacity:0; animation:rise .8s .2s forwards;
+  }
+  .hero h1 .red{ color:var(--red); }
+  .hero-sub{
+    margin-top:28px; max-width:580px;
+    font-size:clamp(16px,2.4vw,20px);
+    line-height:1.65; color:#444;
+    opacity:0; animation:rise .8s .35s forwards;
+  }
+  .hero-sub b{ color:var(--ink); }
+  .hero-meta{
+    margin-top:48px; display:flex; gap:40px; flex-wrap:wrap;
+    opacity:0; animation:rise .8s .5s forwards;
+  }
+  .hero-meta div{font-size:13px; color:var(--gray);}
+  .hero-meta strong{display:block; font-size:15px; color:var(--ink); font-weight:700; margin-top:4px;}
+  @keyframes rise{ from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);} }
+
+  .hero-deco{
+    position:absolute; right:-2vw; top:16%;
+    font-family:'Gaegu', cursive; font-size:20px; color:var(--gray);
+    transform:rotate(5deg);
+    display:flex; flex-direction:column; align-items:flex-end; gap:6px;
+    opacity:0; animation:rise 1s .7s forwards;
+  }
+  .hero-deco .bubble{
+    background:var(--cream); border:1.5px solid var(--ink);
+    padding:10px 16px; border-radius:20px 20px 4px 20px;
+    font-size:16px;
+  }
+  @media(max-width:900px){ .hero-deco{display:none;} }
+
+  .scroll-cue{
+    position:absolute; bottom:36px; left:6vw;
+    display:flex; align-items:center; gap:10px;
+    font-size:12px; color:var(--gray); font-weight:600;
+    opacity:0; animation:rise .8s 1s forwards;
+  }
+  .scroll-cue .line{ width:1px; height:36px; background:var(--gray); position:relative; overflow:hidden;}
+  .scroll-cue .line::after{
+    content:''; position:absolute; top:-100%; left:0; width:100%; height:100%;
+    background:var(--red); animation:scrollline 1.8s infinite;
+  }
+  @keyframes scrollline{ to{ top:100%; } }
+
+  /* ===== INTRO STRIP ===== */
+  .intro{
+    padding:100px 6vw; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    display:grid; grid-template-columns:1fr 1.6fr; gap:60px;
+  }
+  .intro h2{ font-size:14px; font-weight:700; color:var(--red); letter-spacing:0.06em; }
+  .intro p{ font-size:clamp(20px,3vw,30px); line-height:1.55; font-weight:600; letter-spacing:-0.01em; }
+  .intro p em{ font-style:normal; color:var(--gray); font-weight:400; }
+  @media(max-width:760px){ .intro{grid-template-columns:1fr; gap:20px;} }
+
+  /* ===== ROUTE STRIP (영업 동선 모티프) ===== */
+  .route{
+    margin:0 6vw; padding:56px 0;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:8px; flex-wrap:wrap;
+  }
+  .route .stop{ text-align:center; flex:1; min-width:90px; }
+  .route .stop .dot{
+    width:14px; height:14px; border-radius:50%; background:var(--red);
+    margin:0 auto 10px; box-shadow:0 0 0 5px var(--cream);
+  }
+  .route .stop .lbl{ font-size:12px; font-weight:700; color:var(--ink); }
+  .route .stop .time{ font-size:11px; color:var(--gray); margin-top:2px; }
+  .route .seg{
+    flex:1.4; height:0; border-top:2px dashed var(--line); position:relative; min-width:30px;
+  }
+  @media(max-width:720px){ .route{flex-direction:column; align-items:flex-start;} .route .seg{ width:2px; height:30px; border-top:none; border-left:2px dashed var(--line); margin-left:7px;} .route .stop{display:flex; align-items:center; gap:14px; text-align:left;} .route .stop .dot{margin:0;} }
+
+  /* ===== PROFILE CARD ===== */
+  .profile{
+    margin:90px 6vw; padding:48px;
+    background:var(--cream);
+    border-radius:28px;
+    display:grid; grid-template-columns:auto 1fr; gap:40px; align-items:center;
+    position:relative;
+  }
+  .profile .avatar{
+    width:128px; height:128px; border-radius:50%;
+    background:linear-gradient(135deg, #FFD9A8, #FFE3A8);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0; overflow:hidden;
+    box-shadow:0 14px 30px -10px rgba(228,0,43,0.35);
+    border:4px solid #fff;
+  }
+  .profile .avatar svg{ width:100%; height:100%; display:block; }
+  .profile .info .role-tag{
+    display:inline-block; font-size:12px; font-weight:700; color:var(--red);
+    background:#fff; padding:5px 12px; border-radius:100px; margin-bottom:10px;
+  }
+  .profile .info h3{ font-size:clamp(24px,3.2vw,32px); font-weight:900; letter-spacing:-0.02em;}
+  .profile .info p{ margin-top:8px; font-size:15px; color:#555; line-height:1.6; max-width:540px;}
+  @media(max-width:640px){ .profile{grid-template-columns:1fr; text-align:left; padding:32px;} }
+
+  /* ===== Q&A SECTION ===== */
+  .qa-wrap{ padding:40px 6vw 60px; max-width:980px; margin:0 auto; }
+  .qa-block{
+    display:grid; grid-template-columns:120px 1fr; gap:28px;
+    padding:48px 0; border-bottom:1px solid var(--line);
+    opacity:0; transform:translateY(24px);
+  }
+  .qa-block.in{ animation:rise .7s forwards; }
+  .qnum{ font-family:'Gaegu', cursive; font-weight:700; font-size:15px; color:var(--gray); padding-top:6px; }
+  .qside{ position:relative; }
+  .question{
+    font-family:'Gaegu', cursive; font-weight:700;
+    font-size:clamp(22px,3vw,30px); color:var(--ink); line-height:1.4;
+    margin-bottom:18px; position:relative; display:inline-block;
+  }
+  .question::after{
+    content:''; position:absolute; left:0; bottom:2px; width:100%; height:10px;
+    background:#FFE3A8; z-index:-1; opacity:.8;
+  }
+  .answer{ font-size:16.5px; line-height:1.85; color:#3a3a3a; }
+  .answer + .answer{ margin-top:14px; }
+  .pull{
+    margin-top:22px; padding:20px 24px;
+    border-left:3px solid var(--red);
+    background:var(--cream);
+    border-radius:0 14px 14px 0;
+    font-size:17px; font-weight:600; line-height:1.6; color:var(--red-deep);
+  }
+  @media(max-width:640px){ .qa-block{ grid-template-columns:1fr; gap:10px; } .qnum{ padding-top:0; } }
+
+  /* ===== WAVEFORM DIVIDER ===== */
+  .wave{ display:flex; align-items:center; justify-content:center; gap:3px; height:48px; margin:10px 6vw 0; }
+  .wave span{ width:3px; background:var(--red); border-radius:3px; opacity:.55; animation:bar 1.6s ease-in-out infinite; }
+  @keyframes bar{ 0%,100%{ transform:scaleY(.4);} 50%{ transform:scaleY(1);} }
+
+  /* ===== SCENE ILLUSTRATION CARD (사진 대체 일러스트) ===== */
+  .scene{
+    margin-top:26px; border-radius:18px; overflow:hidden;
+    border:1px solid var(--line); background:#FAF8F4;
+  }
+  .scene svg{ width:100%; height:auto; display:block; }
+  .scene-cap{
+    padding:12px 18px; font-size:12.5px; color:var(--gray); font-weight:600;
+    border-top:1px solid var(--line); display:flex; align-items:center; gap:8px;
+  }
+  .scene-cap::before{ content:'📍'; font-size:13px; }
+
+  /* ===== CARD NEWS (카드뉴스) ===== */
+  .cardnews{ padding:100px 6vw; }
+  .cardnews .head{ max-width:640px; margin:0 auto 50px; text-align:center; }
+  .cardnews .head .eyebrow{ font-size:13px; font-weight:700; color:var(--red); letter-spacing:0.08em; }
+  .cardnews .head h2{ font-size:clamp(28px,4vw,42px); font-weight:900; letter-spacing:-0.03em; margin-top:14px; line-height:1.3;}
+  .cardnews .head p{ margin-top:14px; font-size:14.5px; color:var(--gray); }
+  .cn-strip{
+    max-width:1100px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:18px;
+  }
+  .cn-card{
+    aspect-ratio:4/5; border-radius:20px; overflow:hidden; position:relative;
+    box-shadow:0 16px 32px -18px rgba(0,0,0,0.25);
+  }
+  .cn-card svg{ width:100%; height:100%; display:block; }
+  @media(max-width:900px){ .cn-strip{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:480px){ .cn-strip{ grid-template-columns:1fr; max-width:340px; } }
+  .cn-hint{ text-align:center; margin-top:26px; font-size:12.5px; color:var(--gray); }
+
+  /* ===== JOB TYPES (영업 직군 3종) ===== */
+  .jobtypes{ padding:100px 6vw; background:#FAF8F4; }
+  .jobtypes .head{ max-width:600px; margin:0 auto 56px; text-align:center; }
+  .jobtypes .head .eyebrow{ font-size:13px; font-weight:700; color:var(--red); letter-spacing:0.08em; }
+  .jobtypes .head h2{ font-size:clamp(28px,4vw,42px); font-weight:900; letter-spacing:-0.03em; margin-top:14px; line-height:1.3;}
+  .jgrid{ max-width:1040px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .jcard{ background:#fff; border:1px solid var(--line); border-radius:20px; padding:34px 28px; }
+  .jcard .jtag{ display:inline-block; font-size:12px; font-weight:700; color:#fff; background:var(--ink); padding:4px 10px; border-radius:6px; margin-bottom:18px;}
+  .jcard h4{ font-size:19px; font-weight:800; margin-bottom:10px; }
+  .jcard p{ font-size:14px; color:#555; line-height:1.7; }
+  @media(max-width:760px){ .jgrid{grid-template-columns:1fr;} }
+
+  /* ===== TAKEAWAYS ===== */
+  .takeaways{ padding:100px 6vw; background:var(--ink); color:#fff; }
+  .takeaways .head{ max-width:600px; margin:0 auto 56px; text-align:center; }
+  .takeaways .head .eyebrow{ font-size:13px; font-weight:700; color:#ff5b73; letter-spacing:0.08em; }
+  .takeaways .head h2{ font-size:clamp(30px,4.5vw,46px); font-weight:900; letter-spacing:-0.03em; margin-top:14px; line-height:1.25;}
+  .tgrid{ max-width:1040px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,255,255,0.12); border-radius:20px; overflow:hidden; }
+  .tcard{ background:#232323; padding:36px 30px; }
+  .tcard .ti{ font-family:'Gaegu',cursive; font-size:30px; color:var(--red); margin-bottom:16px; }
+  .tcard h4{ font-size:18px; font-weight:700; margin-bottom:10px; }
+  .tcard p{ font-size:14px; color:#b8b8b8; line-height:1.7; }
+  @media(max-width:760px){ .tgrid{grid-template-columns:1fr;} }
+
+  /* ===== CTA ===== */
+  .cta{ padding:140px 6vw; text-align:center; position:relative; }
+  .cta h2{ font-size:clamp(36px,7vw,72px); font-weight:900; letter-spacing:-0.03em; line-height:1.15; }
+  .cta h2 .red{ color:var(--red); }
+  .cta p{ margin-top:20px; color:var(--gray); font-size:16px; }
+  .cta-btns{ margin-top:42px; display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+  .btn{ padding:16px 32px; border-radius:100px; font-weight:700; font-size:15px; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:transform .25s ease, box-shadow .25s ease; }
+  .btn-primary{ background:var(--red); color:#fff; box-shadow:0 14px 28px -10px rgba(228,0,43,.55);}
+  .btn-primary:hover{ transform:translateY(-3px); }
+  .btn-ghost{ border:1.5px solid var(--ink); color:var(--ink); }
+  .btn-ghost:hover{ background:var(--ink); color:#fff; }
+
+  .signoff{ margin-top:64px; padding-top:40px; border-top:1px dashed var(--line); display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .signoff .hand{ font-size:clamp(26px,4.4vw,40px); font-weight:700; color:var(--ink); transform:rotate(-1.5deg); }
+  .signoff-sub{ font-size:clamp(15px,2vw,18px); font-weight:600; color:var(--gray); }
+  .in-mark{ display:inline-block; color:#fff; background:var(--red); padding:2px 10px; border-radius:6px; font-size:0.78em; transform:rotate(-3deg); margin:0 2px; box-shadow:0 4px 10px -4px rgba(228,0,43,.6); }
+  .wave-hand{ display:inline-block; animation:handwave 1.6s ease-in-out infinite; transform-origin:70% 70%; }
+  @keyframes handwave{ 0%,100%{transform:rotate(0deg);} 25%{transform:rotate(14deg);} 75%{transform:rotate(-8deg);} }
+
+  footer{
+    padding:32px 6vw; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; font-size:12px; color:var(--gray); flex-wrap:wrap; gap:10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="mark">농심<span>인</span>의 이야기</div>
+  <nav>
+    <a href="#intro">소개</a>
+    <a href="#profile">인터뷰이</a>
+    <a href="#qa">대화</a>
+    <a href="#cardnews">카드뉴스</a>
+    <a href="#jobtypes">영업 직군</a>
+    <a href="#point">요약</a>
+  </nav>
+</div>
+
+<section class="hero">
+  <div class="hero-eyebrow">NONGSHIM PEOPLE INTERVIEW · EP.08</div>
+  <h1>농<span class="red">담</span><br>NONG-DAM</h1>
+  <p class="hero-sub">농심을 <b>담은</b> 이야기, 농심과 <b>나눈</b> 대화.<br>이번 농담의 주인공은 매일 거래처 사장님을 만나며<br>매대 위 1cm를 두고 진심으로 싸우는 사람 — <b>국내영업팀</b>입니다.</p>
+  <div class="hero-meta">
+    <div>인터뷰이<strong>국내영업팀 · 시판영업 3년차</strong></div>
+    <div>담당 지역<strong>수도권 서남권 특약점</strong></div>
+    <div>소요 시간<strong>읽는 데 6분</strong></div>
+  </div>
+  <div class="hero-deco">
+    <div class="bubble">오늘도 거래처 세 군데 돌고 왔어요</div>
+  </div>
+  <div class="scroll-cue"><div class="line"></div>아래로 내려서 대화 시작</div>
+</section>
+
+<section class="intro" id="intro">
+  <h2>WHY NONG-DAM</h2>
+  <p>신제품이 세상에 나오기 전, 가장 먼저 시식하는 사람.<br>
+  <em>그리고 그 제품이 진짜로 팔리게 만드는 사람도 있습니다.</em><br>
+  '농담'은 그 현장의 진짜 하루를, 가공하지 않고 그대로 옮겨봤습니다.</p>
+</section>
+
+<div class="route" aria-hidden="true">
+  <div class="stop"><div class="dot"></div><div class="lbl">사무실 출근</div><div class="time">09:00</div></div>
+  <div class="seg"></div>
+  <div class="stop"><div class="dot"></div><div class="lbl">거래처 A 방문</div><div class="time">10:30</div></div>
+  <div class="seg"></div>
+  <div class="stop"><div class="dot"></div><div class="lbl">매대 점검</div><div class="time">13:00</div></div>
+  <div class="seg"></div>
+  <div class="stop"><div class="dot"></div><div class="lbl">거래처 B 미팅</div><div class="time">15:30</div></div>
+  <div class="seg"></div>
+  <div class="stop"><div class="dot"></div><div class="lbl">발주 마감</div><div class="time">18:00</div></div>
+</div>
+
+<section class="profile" id="profile">
+  <div class="avatar">
+    <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="64" cy="64" r="64" fill="#FFE9C7"/>
+      <ellipse cx="64" cy="132" rx="46" ry="40" fill="#E4002B"/>
+      <path d="M40 122 Q64 108 88 122 L88 132 L40 132 Z" fill="#B5001F"/>
+      <ellipse cx="64" cy="60" rx="26" ry="28" fill="#3A2A20"/>
+      <ellipse cx="64" cy="66" rx="22" ry="24" fill="#FFD9A8"/>
+      <path d="M40 54 Q42 30 64 28 Q86 30 88 54 Q86 42 64 40 Q42 42 40 54Z" fill="#241812"/>
+      <ellipse cx="55" cy="68" rx="3" ry="3.6" fill="#3A2A20"/>
+      <ellipse cx="73" cy="68" rx="3" ry="3.6" fill="#3A2A20"/>
+      <path d="M57 80 Q64 86 71 80" stroke="#B5564A" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <path d="M30 132 Q34 100 64 98 Q94 100 98 132" fill="#1A1A1A"/>
+      <path d="M48 100 L64 116 L80 100 L72 96 L64 104 L56 96Z" fill="#fff"/>
+      <rect x="60" y="100" width="8" height="14" fill="#E4002B"/>
+    </svg>
+  </div>
+  <div class="info">
+    <span class="role-tag">국내영업 / 시판영업</span>
+    <h3>"라면 한 봉지 뒤에는, 늘 사람이 있어요"</h3>
+    <p>수도권 서남권 특약점을 담당하는 시판영업 3년차입니다. 거래처 사장님들과의 관계 관리부터 신제품 입점, 매대 진열, 프로모션 협의까지 — 농심 제품이 소비자 손에 닿기 직전 마지막 단계를 책임집니다.</p>
+  </div>
+</section>
+
+<div class="wave" aria-hidden="true">
+  <span style="height:14px; animation-delay:0s"></span>
+  <span style="height:26px; animation-delay:.1s"></span>
+  <span style="height:18px; animation-delay:.2s"></span>
+  <span style="height:34px; animation-delay:.3s"></span>
+  <span style="height:20px; animation-delay:.4s"></span>
+  <span style="height:30px; animation-delay:.5s"></span>
+  <span style="height:16px; animation-delay:.6s"></span>
+</div>
+
+<section class="qa-wrap" id="qa">
+
+  <div class="qa-block">
+    <div class="qnum">Q1.</div>
+    <div class="qside">
+      <div class="question">영업직, 정확히 어떤 일을 하나요?</div>
+      <div class="answer">한마디로 정의하면 "거래처와 농심 사이의 다리를 놓는 일"이에요. 저는 그중에서도 시판영업이라, 동네 슈퍼마켓이나 편의점에 물건을 대주는 특약점들을 관리해요. 발주량 협의, 신제품 입점 제안, 매대 위치 협상까지 다 제 손을 거쳐요.</div>
+      <div class="answer">사람들은 '영업'이라고 하면 무작정 물건을 파는 일이라고 생각하는데, 실제로는 반대예요. 거래처가 잘 팔리게 도와드리는 게 먼저고, 그래야 다음 발주로 이어져요. 단기 판매보다 관계가 더 중요한 일이에요.</div>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qnum">Q2.</div>
+    <div class="qside">
+      <div class="question">입사 첫날, 기억나는 에피소드 있어요?</div>
+      <div class="answer">지점에 들어갔는데 책상 위에 전화기 하나만 덩그러니 저를 기다리고 있더라고요. 순간 '아, 이게 진짜 시작이구나' 싶었어요. 매뉴얼을 읽는 게 아니라 바로 전화를 들고 거래처에 인사를 드려야 하는 분위기였거든요.</div>
+      <div class="pull">"긴장한 채로 사무실에 들어갔는데, 선배님들이 저희 회사 제품들로 책상을 가득 채워놓으셨더라고요. 그 작은 배려에 긴장이 확 풀렸던 기억이 나요."</div>
+      <div class="answer">그리고 첫 월급 받고 부모님께 용돈을 드리려는데, 계좌 이체 한도가 70만 원이라 100만 원이 한 번에 안 보내지더라고요. 여러 은행 앱을 켜서 나눠 보냈던 게 아직도 생생해요. 별거 아닌데 그런 게 더 오래 기억에 남아요.</div>
+      <div class="scene">
+        <svg viewBox="0 0 600 340" xmlns="http://www.w3.org/2000/svg">
+          <rect width="600" height="340" fill="#FFF4E0"/>
+          <rect x="0" y="240" width="600" height="100" fill="#F2E6D0"/>
+          <rect x="60" y="60" width="180" height="180" rx="10" fill="#fff" stroke="#E8E2D8" stroke-width="2"/>
+          <rect x="80" y="80" width="140" height="16" rx="4" fill="#E4002B"/>
+          <rect x="80" y="106" width="100" height="10" rx="3" fill="#D9CFC0"/>
+          <rect x="80" y="124" width="120" height="10" rx="3" fill="#D9CFC0"/>
+          <rect x="80" y="160" width="140" height="50" rx="6" fill="#FFE3A8"/>
+          <circle cx="150" cy="120" r="0" fill="none"/>
+          <rect x="280" y="40" width="260" height="220" rx="14" fill="#fff" stroke="#E8E2D8" stroke-width="2"/>
+          <circle cx="410" cy="120" r="46" fill="#FFD9A8"/>
+          <path d="M368 108 Q372 78 410 76 Q448 78 452 108 Q448 96 410 94 Q372 96 368 108Z" fill="#241812"/>
+          <ellipse cx="396" cy="124" rx="3" ry="3.6" fill="#3A2A20"/>
+          <ellipse cx="424" cy="124" rx="3" ry="3.6" fill="#3A2A20"/>
+          <path d="M398 136 Q410 142 422 136" stroke="#B5564A" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <rect x="370" y="166" width="80" height="70" rx="10" fill="#E4002B"/>
+          <rect x="392" y="178" width="36" height="10" rx="3" fill="#fff" opacity="0.85"/>
+          <rect x="300" y="80" width="6" height="160" fill="#F2E6D0"/>
+          <text x="300" y="300" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-size="15" font-weight="700" fill="#8C8579">신입사원 환영 데스크 · 동료들이 채워둔 책상</text>
+        </svg>
+        <div class="scene-cap">입사 첫날, 선배들이 농심 제품으로 채워둔 책상</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qnum">Q3.</div>
+    <div class="qside">
+      <div class="question">하루 일과가 어떻게 되나요?</div>
+      <div class="answer">아침엔 사무실에서 전날 발주 현황과 재고를 확인하고, 오전 중에 거래처 한두 곳을 직접 방문해요. 매대에 진열이 잘 돼 있는지, 유통기한이 임박한 제품은 없는지 눈으로 직접 확인하는 게 중요해요.</div>
+      <div class="answer">오후엔 다른 거래처 사장님을 만나서 다음 달 프로모션이나 신제품 입점을 협의하고, 퇴근 전엔 그날 처리한 발주를 마감해요. 사무실 업무와 현장 업무가 거의 반반인 직무예요. 그래서 하루도 똑같은 날이 없어요.</div>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qnum">Q4.</div>
+    <div class="qside">
+      <div class="question">영업하면서 가장 뿌듯했던 순간은요?</div>
+      <div class="answer">제가 설득해서 입점시킨 신제품이 거래처 매대에서 가장 잘 팔리는 위치에, 가장 잘 팔리는 상품으로 자리 잡았을 때요. 처음엔 사장님이 "검증 안 된 제품을 왜 더 넣냐"며 거절하셨는데, 시식 행사까지 같이 준비해서 결국 설득했거든요.</div>
+      <div class="answer">한 달 뒤에 그 사장님이 먼저 전화를 주셔서 "그거 더 들여놔야겠다"고 하셨을 때, 정말 짜릿했어요. 영업은 결과가 숫자로 바로 보이는 직무라서, 그 순간의 보람이 커요. 내가 설득한 만큼 매대가 바뀌고, 매출이 바뀌어요.</div>
+      <div class="scene">
+        <svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+          <rect width="600" height="320" fill="#FAF8F4"/>
+          <rect x="0" y="250" width="600" height="70" fill="#EFE6D4"/>
+          <!-- shelf -->
+          <rect x="40" y="60" width="230" height="190" rx="8" fill="#fff" stroke="#E8E2D8" stroke-width="2"/>
+          <rect x="50" y="90" width="210" height="8" fill="#D9CFC0"/>
+          <rect x="50" y="150" width="210" height="8" fill="#D9CFC0"/>
+          <rect x="50" y="210" width="210" height="8" fill="#D9CFC0"/>
+          <g>
+            <rect x="58" y="98" width="26" height="48" rx="4" fill="#E4002B"/>
+            <rect x="88" y="98" width="26" height="48" rx="4" fill="#E4002B"/>
+            <rect x="118" y="98" width="26" height="48" rx="4" fill="#FF6B3D"/>
+            <rect x="148" y="98" width="26" height="48" rx="4" fill="#E4002B"/>
+            <rect x="178" y="98" width="26" height="48" rx="4" fill="#FFB400"/>
+            <rect x="208" y="98" width="26" height="48" rx="4" fill="#E4002B"/>
+          </g>
+          <g>
+            <rect x="58" y="158" width="26" height="48" rx="4" fill="#FFB400"/>
+            <rect x="88" y="158" width="26" height="48" rx="4" fill="#E4002B"/>
+            <rect x="118" y="158" width="26" height="48" rx="4" fill="#E4002B"/>
+            <rect x="148" y="158" width="26" height="48" rx="4" fill="#FF6B3D"/>
+            <rect x="178" y="158" width="26" height="48" rx="4" fill="#E4002B"/>
+            <rect x="208" y="158" width="26" height="48" rx="4" fill="#E4002B"/>
+          </g>
+          <!-- 영업사원 -->
+          <ellipse cx="380" cy="280" rx="48" ry="14" fill="#E8E2D8" opacity="0.6"/>
+          <rect x="350" y="160" width="60" height="90" rx="14" fill="#1A1A1A"/>
+          <circle cx="380" cy="130" r="32" fill="#FFD9A8"/>
+          <path d="M350 122 Q352 96 380 94 Q408 96 410 122 Q408 110 380 108 Q352 110 350 122Z" fill="#241812"/>
+          <ellipse cx="370" cy="134" rx="3" ry="3.6" fill="#3A2A20"/>
+          <ellipse cx="390" cy="134" rx="3" ry="3.6" fill="#3A2A20"/>
+          <path d="M368 146 Q380 152 392 146" stroke="#B5564A" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+          <rect x="362" y="178" width="36" height="10" rx="3" fill="#E4002B"/>
+          <!-- 클립보드 -->
+          <rect x="404" y="190" width="34" height="44" rx="4" fill="#fff" stroke="#D9CFC0" stroke-width="2"/>
+          <rect x="410" y="198" width="22" height="4" fill="#E4002B"/>
+          <rect x="410" y="206" width="22" height="3" fill="#D9CFC0"/>
+          <rect x="410" y="213" width="16" height="3" fill="#D9CFC0"/>
+          <rect x="410" y="220" width="22" height="3" fill="#D9CFC0"/>
+          <!-- 거래처 사장님 -->
+          <ellipse cx="490" cy="280" rx="48" ry="14" fill="#E8E2D8" opacity="0.6"/>
+          <rect x="462" y="168" width="56" height="82" rx="14" fill="#5B7B8C"/>
+          <circle cx="490" cy="138" r="30" fill="#F2C499"/>
+          <path d="M462 128 Q464 104 490 102 Q516 104 518 128 Q516 118 490 116 Q464 118 462 128Z" fill="#5A4A3A"/>
+          <ellipse cx="481" cy="142" rx="3" ry="3.4" fill="#3A2A20"/>
+          <ellipse cx="499" cy="142" rx="3" ry="3.4" fill="#3A2A20"/>
+          <path d="M480 153 Q490 158 500 153" stroke="#B5564A" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <text x="300" y="300" text-anchor="middle" font-family="Noto Sans KR, sans-serif" font-size="15" font-weight="700" fill="#8C8579">거래처 매대 점검 · 신제품 진열 협의 현장</text>
+        </svg>
+        <div class="scene-cap">설득 끝에 가장 잘 보이는 자리를 따낸 날</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-block">
+    <div class="qnum">Q5.</div>
+    <div class="qside">
+      <div class="question">영업직에 어울리는 사람은 어떤 사람일까요?</div>
+      <div class="answer">셋 중 하나라도 해당되면 잘 맞을 것 같아요. 거절을 두려워하지 않는 사람, 숫자보다 사람을 먼저 보는 사람, 그리고 작은 약속도 끝까지 지키는 사람.</div>
+      <div class="answer">화려한 말솜씨보다 더 중요한 건 '꾸준함'이에요. 거래처 사장님들은 말 잘하는 사람보다 매번 같은 시간에 찾아오고, 약속한 건 반드시 지키는 사람을 더 신뢰하시더라고요. 그 신뢰가 쌓이면 그게 곧 영업력이 돼요.</div>
+    </div>
+  </div>
+
+</section>
+
+<section class="cardnews" id="cardnews">
+  <div class="head">
+    <div class="eyebrow">CARD NEWS</div>
+    <h2>한 장으로 보는<br>시판영업 키워드</h2>
+    <p>인터뷰 내용을 카드뉴스 4장으로 요약했어요. 저장하거나 공유해보세요.</p>
+  </div>
+  <div class="cn-strip">
+
+    <div class="cn-card">
+      <svg viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg">
+        <rect width="320" height="400" fill="#E4002B"/>
+        <circle cx="280" cy="40" r="90" fill="#B5001F" opacity="0.5"/>
+        <circle cx="20" cy="370" r="70" fill="#FF5B73" opacity="0.35"/>
+        <text x="32" y="64" font-family="Noto Sans KR, sans-serif" font-size="13" font-weight="700" fill="#FFD6DC" letter-spacing="2">01 / KEYWORD</text>
+        <text x="32" y="170" font-family="Noto Sans KR, sans-serif" font-size="56" font-weight="900" fill="#fff">신뢰</text>
+        <text x="32" y="208" font-family="Noto Sans KR, sans-serif" font-size="15" font-weight="600" fill="#FFE3E8">한 번의 거래보다,</text>
+        <text x="32" y="232" font-family="Noto Sans KR, sans-serif" font-size="15" font-weight="600" fill="#FFE3E8">오래 쌓은 믿음이</text>
+        <text x="32" y="256" font-family="Noto Sans KR, sans-serif" font-size="15" font-weight="600" fill="#FFE3E8">더 큰 발주로 돌아온다</text>
+        <text x="32" y="362" font-family="Gaegu, cursive" font-size="20" font-weight="700" fill="#fff">농담 · 영업직 인터뷰</text>
+      </svg>
+    </div>
+
+    <div class="cn-card">
+      <svg viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg">
+        <rect width="320" height="400" fill="#1A1A1A"/>
+        <circle cx="300" cy="380" r="100" fill="#2A2A2A"/>
+        <rect x="0" y="0" width="320" height="6" fill="#E4002B"/>
+        <text x="32" y="64" font-family="Noto Sans KR, sans-serif" font-size="13" font-weight="700" fill="#FF8C9C" letter-spacing="2">02 / A DAY</text>
+        <text x="32" y="130" font-family="Noto Sans KR, sans-serif" font-size="40" font-weight="900" fill="#fff">현장 반,</text>
+        <text x="32" y="178" font-family="Noto Sans KR, sans-serif" font-size="40" font-weight="900" fill="#fff">사무실 반</text>
+        <g font-family="Noto Sans KR, sans-serif" font-size="14" font-weight="600" fill="#C9C9C9">
+          <text x="32" y="232">09:00 발주 · 재고 확인</text>
+          <text x="32" y="258">10:30 거래처 방문</text>
+          <text x="32" y="284">15:30 신제품 입점 협의</text>
+          <text x="32" y="310">18:00 발주 마감</text>
+        </g>
+        <text x="32" y="362" font-family="Gaegu, cursive" font-size="20" font-weight="700" fill="#fff">농담 · 영업직 인터뷰</text>
+      </svg>
+    </div>
+
+    <div class="cn-card">
+      <svg viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg">
+        <rect width="320" height="400" fill="#FFF4E0"/>
+        <circle cx="40" cy="40" r="80" fill="#FFE3A8" opacity="0.7"/>
+        <text x="32" y="64" font-family="Noto Sans KR, sans-serif" font-size="13" font-weight="700" fill="#B5001F" letter-spacing="2">03 / SKILL</text>
+        <text x="32" y="160" font-family="Noto Sans KR, sans-serif" font-size="44" font-weight="900" fill="#1A1A1A">꾸준함</text>
+        <text x="32" y="198" font-family="Noto Sans KR, sans-serif" font-size="15" font-weight="600" fill="#555">말솜씨보다 중요한 건</text>
+        <text x="32" y="222" font-family="Noto Sans KR, sans-serif" font-size="15" font-weight="600" fill="#555">매번 같은 시간에</text>
+        <text x="32" y="246" font-family="Noto Sans KR, sans-serif" font-size="15" font-weight="600" fill="#555">찾아가는 약속이다</text>
+        <rect x="32" y="280" width="180" height="3" fill="#E4002B"/>
+        <text x="32" y="362" font-family="Gaegu, cursive" font-size="20" font-weight="700" fill="#1A1A1A">농담 · 영업직 인터뷰</text>
+      </svg>
+    </div>
+
+    <div class="cn-card">
+      <svg viewBox="0 0 320 400" xmlns="http://www.w3.org/2000/svg">
+        <rect width="320" height="400" fill="#fff"/>
+        <rect width="320" height="400" fill="none" stroke="#E4002B" stroke-width="10"/>
+        <text x="32" y="74" font-family="Noto Sans KR, sans-serif" font-size="13" font-weight="700" fill="#E4002B" letter-spacing="2">04 / NUMBERS</text>
+        <text x="32" y="160" font-family="Noto Sans KR, sans-serif" font-size="52" font-weight="900" fill="#1A1A1A">3</text>
+        <text x="72" y="160" font-family="Noto Sans KR, sans-serif" font-size="20" font-weight="700" fill="#1A1A1A">개 영업 직군</text>
+        <text x="32" y="190" font-family="Noto Sans KR, sans-serif" font-size="13.5" font-weight="600" fill="#777">시판 · 직판 · 특판</text>
+        <text x="32" y="250" font-family="Noto Sans KR, sans-serif" font-size="52" font-weight="900" fill="#1A1A1A">1cm</text>
+        <text x="32" y="280" font-family="Noto Sans KR, sans-serif" font-size="13.5" font-weight="600" fill="#777">매대 위 자리를 두고</text>
+        <text x="32" y="300" font-family="Noto Sans KR, sans-serif" font-size="13.5" font-weight="600" fill="#777">매일 협상합니다</text>
+        <text x="32" y="362" font-family="Gaegu, cursive" font-size="20" font-weight="700" fill="#1A1A1A">농담 · 영업직 인터뷰</text>
+      </svg>
+    </div>
+
+  </div>
+  <p class="cn-hint">이미지를 우클릭(길게 누르기)해서 저장할 수 있어요.</p>
+</section>
+
+<section class="jobtypes" id="jobtypes">
+  <div class="head">
+    <div class="eyebrow">국내영업, 세 갈래 길</div>
+    <h2>같은 영업이지만,<br>만나는 사람은 다 달라요</h2>
+  </div>
+  <div class="jgrid">
+    <div class="jcard">
+      <span class="jtag">시판영업</span>
+      <h4>동네 매대의 주인공</h4>
+      <p>농심 특약점 거래처를 관리하며 동네 슈퍼, 편의점 등 소매 채널의 매대와 발주를 직접 챙깁니다. 지금 인터뷰의 주인공이 담당하는 영역이에요.</p>
+    </div>
+    <div class="jcard">
+      <span class="jtag">직판영업</span>
+      <h4>대형 유통의 파트너</h4>
+      <p>대형마트, SSM 등 대형 유통업체를 대상으로 영업합니다. 전국 단위 프로모션과 큰 규모의 협상을 다루는 만큼 스케일이 다른 영업이에요.</p>
+    </div>
+    <div class="jcard">
+      <span class="jtag">특판영업</span>
+      <h4>새로운 시장의 개척자</h4>
+      <p>군납, 실수요처, 온라인 거래처 등 정형화되지 않은 채널을 대상으로 합니다. 기존 틀 밖에서 새로운 판로를 찾는 역할이에요.</p>
+    </div>
+  </div>
+</section>
+
+<section class="takeaways" id="point">
+  <div class="head">
+    <div class="eyebrow">3 TAKEAWAYS</div>
+    <h2>오늘의 농담,<br>세 줄로 요약하면</h2>
+  </div>
+  <div class="tgrid">
+    <div class="tcard">
+      <div class="ti">하나,</div>
+      <h4>영업은 설득이 아니라 신뢰다</h4>
+      <p>한 번의 거래보다, 꾸준히 쌓은 신뢰가 다음 발주와 더 큰 기회를 만듭니다.</p>
+    </div>
+    <div class="tcard">
+      <div class="ti">둘,</div>
+      <h4>현장이 곧 데이터다</h4>
+      <p>매대 앞에 직접 서야 보이는 것들이 있어요. 숫자보다 눈으로 먼저 확인합니다.</p>
+    </div>
+    <div class="tcard">
+      <div class="ti">셋,</div>
+      <h4>작은 약속이 영업력이다</h4>
+      <p>화려한 언변보다, 약속한 시간에 찾아가는 꾸준함이 더 큰 무기가 됩니다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>다음 농담의 주인공은,<br>혹시 <span class="red">당신</span>일 수도 있겠네요.</h2>
+  <p>농심그룹 채용 정보를 더 알아보고, 당신의 이야기도 들려주세요.</p>
+  <div class="cta-btns">
+    <a class="btn btn-primary" href="https://recruit.nongshim.com" target="_blank" rel="noopener">채용 사이트 바로가기</a>
+    <a class="btn btn-ghost" href="#qa">다시 한 번 읽어보기</a>
+  </div>
+  <div class="signoff">
+    <p class="hand">여러분 <span class="in-mark">(IN)</span> 안농하세요!</p>
+    <p class="signoff-sub">농심으로 <span class="in-mark">IN</span>! 안농하세요 <span class="wave-hand">~</span></p>
+  </div>
+</section>
+
+<footer>
+  <span>© NONGSHIM GROUP · 농심인의 이야기 '농담'</span>
+  <span>본 페이지는 영업직(국내영업) 직무 소개를 위한 콘셉트 인터뷰입니다.</span>
+</footer>
+
+<script>
+  const blocks = document.querySelectorAll('.qa-block');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  blocks.forEach(b=>io.observe(b));
+</script>
+
+</body>
+</html>
